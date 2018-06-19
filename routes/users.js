@@ -6,7 +6,8 @@ var router = express.Router();
 router.get('/', function(req, res, next) {
   
   // recuperar apostadores
-  request.get("http://localhost:3000/api/apostadores", function(error, response, body) {
+  var apiURL = process.env.API_URL;
+  request.get(apiURL+"/apostadores", function(error, response, body) {
     if(error) {
       return console.dir(error);
     }

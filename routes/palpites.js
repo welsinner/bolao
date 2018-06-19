@@ -14,7 +14,7 @@ router.get('/:apostador', function(req, res, next) {
   }
 
   // recuperar apostadores
-  var host = "http://localhost:3000/api/palpites/" + apostador
+  var host = process.env.API_URL + "/palpites/" + apostador
   request.get(host, function(error, response, body) {
     if(error) {
       return console.dir(error);
