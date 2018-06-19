@@ -7,6 +7,8 @@ var logger = require('morgan');
 var versionRouter = require('./routes/version');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
+var rankingRouter = require('./routes/ranking');
+var palpitesRouter = require('./routes/palpites');
 
 var app = express();
 
@@ -20,9 +22,12 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+// routers
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/version', versionRouter);
+app.use('/ranking', rankingRouter);
+app.use('/palpites', palpitesRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

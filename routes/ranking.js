@@ -6,7 +6,7 @@ var router = express.Router();
 router.get('/', function(req, res, next) {
   
   // recuperar apostadores
-  request.get("http://localhost:3000/api/apostadores", function(error, response, body) {
+  request.get("http://localhost:3000/api/ranking", function(error, response, body) {
     if(error) {
       return console.dir(error);
     }
@@ -14,7 +14,7 @@ router.get('/', function(req, res, next) {
     // exibir lista
     var dados = JSON.parse(body);
     console.log(dados);
-    res.render('users', { title: 'Lista de Apostadores do Bolao da Copa 2018', apostadores: dados.data });
+    res.render('ranking', { title: 'Ranking do Bolao da Copa 2018', ranking: dados.data });
   });
   
 });
