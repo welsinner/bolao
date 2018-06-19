@@ -6,12 +6,14 @@ var options = {
 };
 
 var pgp = require('pg-promise')(options);
-var connectionString = 'postgres://postgres:postgres@localhost:5432/bolao';
+pgp.pg.defaults.ssl = true;
+//var connectionString = 'postgres://postgres:postgres@localhost:5432/bolao';
+var connectionString = process.env.DATABASE_URL;
 var db = pgp(connectionString);
 
 // add query functions
 function getPalpites(req, res, next) {
-  db.any('SELECT * FROM public."PALPITES"')
+  db.any('SELECT * FROM PALPITES')
     .then(function (data) {
       res.status(200)
         .json({
@@ -27,7 +29,7 @@ function getPalpites(req, res, next) {
 
 function getPalpitesApostador(req, res, next) {
   var nomeApostador = req.params.apostador;
-  db.any('SELECT * FROM public."PALPITES" WHERE "PALP_NOME_APOSTADOR" = $1', nomeApostador)
+  db.any('SELECT * FROM PALPITES WHERE PALP_NOME_APOSTADOR = $1', nomeApostador)
     .then(function (data) {
       res.status(200)
         .json({
@@ -45,7 +47,7 @@ function getPalpitesApostador(req, res, next) {
 
 function getPalpite(req, res, next) {
   var pupID = parseInt(req.params.id);
-  db.one('SELECT * FROM public."PALPITES" WHERE "PALP_ID" = $1', pupID)
+  db.one('SELECT * FROM PALPITES WHERE PALP_ID = $1', pupID)
     .then(function (data) {
       res.status(200)
         .json({
@@ -62,7 +64,7 @@ function getPalpite(req, res, next) {
 }
 
 function getRanking(req, res, next) {
-  db.any('SELECT "PALP_NOME_APOSTADOR", SUM("PALP_PONTOS") AS "TOTAL" FROM PUBLIC."PALPITES" GROUP BY "PALP_NOME_APOSTADOR" ORDER BY "TOTAL", "PALP_NOME_APOSTADOR"')
+  db.any('SELECT PALP_NOME_APOSTADOR, SUM(PALP_PONTOS) AS TOTAL FROM PALPITES GROUP BY PALP_NOME_APOSTADOR ORDER BY TOTAL, PALP_NOME_APOSTADOR')
     .then(function (data) {
       res.status(200)
         .json({
@@ -77,7 +79,7 @@ function getRanking(req, res, next) {
 }
 
 function getApostadores(req, res, next) {
-  db.any('SELECT DISTINCT("PALP_NOME_APOSTADOR") FROM PUBLIC."PALPITES" ORDER BY "PALP_NOME_APOSTADOR";')
+  db.any('SELECT DISTINCT(PALP_NOME_APOSTADOR) FROM PALPITES ORDER BY PALP_NOME_APOSTADOR;')
     .then(function (data) {
       res.status(200)
         .json({
