@@ -64,7 +64,7 @@ function getPalpite(req, res, next) {
 }
 
 function getRanking(req, res, next) {
-  db.any('SELECT PALP_NOME_APOSTADOR, SUM(PALP_PONTOS) AS TOTAL FROM PALPITES GROUP BY PALP_NOME_APOSTADOR ORDER BY TOTAL, PALP_NOME_APOSTADOR')
+  db.any('SELECT PALP_NOME_APOSTADOR, SUM(PALP_PONTOS) AS TOTAL FROM PALPITES GROUP BY PALP_NOME_APOSTADOR ORDER BY TOTAL DESC, PALP_NOME_APOSTADOR')
     .then(function (data) {
       res.status(200)
         .json({
