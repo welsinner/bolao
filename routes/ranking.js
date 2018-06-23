@@ -20,4 +20,19 @@ router.get('/', function(req, res, next) {
   
 });
 
+router.get('/atualiza', function(req, res, next) {
+  
+  // chamar api de atualizacao
+  var apiURL = process.env.API_URL;
+  request.put(apiURL + "/ranking", function(error, response, body) {
+    if(error) {
+      return console.dir(error);
+    }
+  
+    res.render('layout', { title: 'Ranking atualizado com sucesso.'} );
+  });
+  
+});
+
+
 module.exports = router;
