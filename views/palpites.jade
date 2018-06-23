@@ -6,6 +6,13 @@ html
   body
     h1= title
     h2 Apostas de #{apostador}
-    ul
-      each item, index in palpites
-        li= item.palp_nr_jogo + ". " + item.palp_time_a_nome + " " + item.palp_time_a_gols + " x " + item.palp_time_b_gols + " " + item.palp_time_b_nome
+    div
+      table
+        thead
+        tr: th Palpites
+          tbody
+          each item, index in palpites
+            tr
+            td=item.palp_nr_jogo
+            td=item.palp_time_a_nome + " " + item.palp_time_a_gols + " x " + item.palp_time_b_gols + " " + item.palp_time_b_nome
+            td=item.palp_pontos + " pts"

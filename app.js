@@ -9,6 +9,7 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var rankingRouter = require('./routes/ranking');
 var palpitesRouter = require('./routes/palpites');
+var resultadosRouter = require('./routes/resultados');
 
 var app = express();
 
@@ -28,6 +29,7 @@ app.use('/users', usersRouter);
 app.use('/version', versionRouter);
 app.use('/ranking', rankingRouter);
 app.use('/palpites', palpitesRouter);
+app.use('/resultados', resultadosRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

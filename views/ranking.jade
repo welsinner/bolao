@@ -5,6 +5,12 @@ html
     link(rel='stylesheet', href='/stylesheets/style.css')
   body
       h1= title
-      ul
-        each item in ranking
-            li= item.palp_nome_apostador + ": " + item.total + " pts"
+      div
+        table
+          thead
+          tr: th Ranking
+            tbody
+            each item in ranking
+              tr
+              td=item.palp_nome_apostador
+              td=item.total + " pts"

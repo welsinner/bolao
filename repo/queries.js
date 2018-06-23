@@ -29,7 +29,7 @@ function getPalpites(req, res, next) {
 
 function getPalpitesApostador(req, res, next) {
   var nomeApostador = req.params.apostador;
-  db.any('SELECT * FROM PALPITES WHERE PALP_NOME_APOSTADOR = $1', nomeApostador)
+  db.any('SELECT * FROM PALPITES WHERE PALP_NOME_APOSTADOR = $1 ORDER BY PALP_NR_JOGO', nomeApostador)
     .then(function (data) {
       res.status(200)
         .json({
@@ -64,18 +64,20 @@ function getPalpite(req, res, next) {
 }
 
 function updatePalpite(req, res, next) {
-  var pupID = parseInt(req.params.id);
-  db.one('SELECT * FROM PALPITES WHERE PALP_ID = $1', pupID)
+  //var palpiteID = parseInt(req.params.id);
+
+  db.none('UPDATE RESULTADOS SET RESU_TIME_A_GOLS = $1, RESU_TIME_B_GOLS = $2 WHERE RESU_ID = $3',
+    [parseInt(req.query.golsA), parseInt(req.query.golsB), parseInt(req.params.id)])
     .then(function (data) {
       res.status(200)
         .json({
           status: 'success',
           data: data,
-          message: 'Um Palpite recuperado.'
+          message: 'Um Palpite atualizado.'
         });
     })
     .catch(function (err) {
-      console.log("Erro em getPalpite");
+      console.log("Erro em updatePalpite");
       console.log(err);
       return next(err);
     });
